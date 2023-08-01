@@ -17,7 +17,7 @@ const dbConfig = {
   host: '51.222.104.17',
   user: 'cdhproye_admin_dev',
   password: 'Prueba@protela2023',
-  database: 'cdhproye_protela'
+  database: 'cdhproye_protela_produccion'
 };
 
 function actualizarFecha() {
