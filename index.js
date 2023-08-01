@@ -33,7 +33,7 @@ function actualizarFecha() {
       if (err) {
         console.error('Error al ejecutar la consulta', err);
       } else {
-        // console.log('Fecha actualizada correctamente');
+        console.log('Fecha actualizada correctamente');
       }
 
       dbConnection.end(); // Cerrar la conexión después de ejecutar la consulta
@@ -59,6 +59,7 @@ app.get('/datos', (req, res) => {
         res.status(500).json({ error: 'Error al ejecutar la consulta' });
         return;
       }
+
       res.json(results);
       connection.end(); // Cerrar la conexión después de enviar la respuesta
     });
@@ -202,47 +203,47 @@ app.get('/general', (req, res) => {
         return;
       }
 
-      if (results.length > 0) {
-        let eficiencia = 0;
-        let num_maq_total = 0;
-        let maq_on = 0;
-        let body = 0;
-        let maq_desconexion = 0;
+
+      let eficiencia = 0;
+      let num_maq_total = 0;
+      let maq_on = 0;
+      let body = 0;
+      let maq_desconexion = 0;
 
 
-        results.forEach(element => {
-          if (element.power == 2) {
-            maq_on++;
-            eficiencia += element.eficiencia;
-            if (element.rpm) {
-              body += element.rpm;
-            }
+      results.forEach(element => {
+        if (element.power == 2) {
+          maq_on++;
+          eficiencia += element.eficiencia;
+          if (element.rpm) {
+            body += element.rpm;
           }
-          if (element.power == 3 || element.power == 1) {
-            eficiencia += element.eficiencia;
-          }
-          if (element.power != 0) {
-            num_maq_total++;
-          }
-          if (element.power == 0) {
-            maq_desconexion++;
-          }
-        });
+        }
+        if (element.power == 3 || element.power == 1) {
+          eficiencia += element.eficiencia;
+        }
+        if (element.power != 0) {
+          num_maq_total++;
+        }
+        if (element.power == 0) {
+          maq_desconexion++;
+        }
+      });
 
-        const respuesta = [
-          {
-            "TRICOT": {
-              "num_maq_total": num_maq_total,
-              "maq_on": maq_on,
-              "body": Number((body / maq_on).toFixed(0)),
-              "eficiencia": (eficiencia / num_maq_total).toFixed(0),
-              "maq_desconexion": maq_desconexion
-            }
+      const respuesta = [
+        {
+          "TRICOT": {
+            "num_maq_total": num_maq_total,
+            "maq_on": maq_on,
+            "body": Number((body / maq_on).toFixed(0)),
+            "eficiencia": (eficiencia / num_maq_total).toFixed(0),
+            "maq_desconexion": maq_desconexion
           }
-        ];
+        }
+      ];
 
-        connection.end(); // Cerrar la conexión después de enviar la respuesta        
-      }
+      connection.end(); // Cerrar la conexión después de enviar la respuesta
+
       res.json(respuesta);
     });
   });
@@ -265,49 +266,49 @@ app.get('/general_TRICOT', (req, res) => {
         return;
       }
 
+
+      let eficiencia = 0;
+      let num_maq_total = 0;
+      let maq_on = 0;
+      let body = 0;
+      let maq_desconexion = 0;
+
+
       if (results.length > 0) {
-        let eficiencia = 0;
-        let num_maq_total = 0;
-        let maq_on = 0;
-        let body = 0;
-        let maq_desconexion = 0;
-
-
-        if (results.length > 0) {
-          results.forEach(element => {
-            if (element.power == 2) {
-              maq_on++;
-              eficiencia += element.eficiencia;
-              if (element.rpm) {
-                body += element.rpm;
-              }
-            }
-            if (element.power == 3 || element.power == 1) {
-              eficiencia += element.eficiencia;
-            }
-            if (element.power != 0) {
-              num_maq_total++;
-            }
-            if (element.power == 0) {
-              maq_desconexion++;
-            }
-          });
-        }
-
-        const respuesta = [
-          {
-            "TRICOT": {
-              "num_maq_total": num_maq_total,
-              "maq_on": maq_on,
-              "body": Number((body / maq_on).toFixed(0)),
-              "eficiencia": (eficiencia / num_maq_total).toFixed(0),
-              "maq_desconexion": maq_desconexion
+        results.forEach(element => {
+          if (element.power == 2) {
+            maq_on++;
+            eficiencia += element.eficiencia;
+            if (element.rpm) {
+              body += element.rpm;
             }
           }
-        ];
-
-        connection.end(); // Cerrar la conexión después de enviar la respuesta
+          if (element.power == 3 || element.power == 1) {
+            eficiencia += element.eficiencia;
+          }
+          if (element.power != 0) {
+            num_maq_total++;
+          }
+          if (element.power == 0) {
+            maq_desconexion++;
+          }
+        });
       }
+
+      const respuesta = [
+        {
+          "TRICOT": {
+            "num_maq_total": num_maq_total,
+            "maq_on": maq_on,
+            "body": Number((body / maq_on).toFixed(0)),
+            "eficiencia": (eficiencia / num_maq_total).toFixed(0),
+            "maq_desconexion": maq_desconexion
+          }
+        }
+      ];
+
+      connection.end(); // Cerrar la conexión después de enviar la respuesta
+
       res.json(respuesta);
     });
   });
@@ -330,48 +331,48 @@ app.get('/general_RASCHEL', (req, res) => {
         return;
       }
 
+
+      let eficiencia = 200;
+      let num_maq_total = 10;
+      let maq_on = 22;
+      let body = 0;
+      let maq_desconexion = 0;
+
       if (results.length > 0) {
-        let eficiencia = 200;
-        let num_maq_total = 10;
-        let maq_on = 22;
-        let body = 0;
-        let maq_desconexion = 0;
-
-        if (results.length > 0) {
-          results.forEach(element => {
-            if (element.power == 2) {
-              maq_on++;
-              eficiencia += element.eficiencia;
-              if (element.rpm) {
-                body += element.rpm;
-              }
-            }
-            if (element.power == 3 || element.power == 1) {
-              eficiencia += element.eficiencia;
-            }
-            if (element.power != 0) {
-              num_maq_total++;
-            }
-            if (element.power == 0) {
-              maq_desconexion++;
-            }
-          });
-        }
-
-        const respuesta = [
-          {
-            "RASCHEL": {
-              "num_maq_total": num_maq_total,
-              "maq_on": maq_on,
-              "body": Number((body / maq_on).toFixed(0)),
-              "eficiencia": (eficiencia / num_maq_total).toFixed(0),
-              "maq_desconexion": maq_desconexion
+        results.forEach(element => {
+          if (element.power == 2) {
+            maq_on++;
+            eficiencia += element.eficiencia;
+            if (element.rpm) {
+              body += element.rpm;
             }
           }
-        ];
-
-        connection.end(); // Cerrar la conexión después de enviar la respuesta
+          if (element.power == 3 || element.power == 1) {
+            eficiencia += element.eficiencia;
+          }
+          if (element.power != 0) {
+            num_maq_total++;
+          }
+          if (element.power == 0) {
+            maq_desconexion++;
+          }
+        });
       }
+
+      const respuesta = [
+        {
+          "RASCHEL": {
+            "num_maq_total": num_maq_total,
+            "maq_on": maq_on,
+            "body": Number((body / maq_on).toFixed(0)),
+            "eficiencia": (eficiencia / num_maq_total).toFixed(0),
+            "maq_desconexion": maq_desconexion
+          }
+        }
+      ];
+
+      connection.end(); // Cerrar la conexión después de enviar la respuesta
+
       res.json(respuesta);
     });
   });
@@ -394,48 +395,48 @@ app.get('/general_URDIDOS', (req, res) => {
         return;
       }
 
+
+      let eficiencia = 300;
+      let num_maq_total = 30;
+      let maq_on = 33;
+      let body = 0;
+      let maq_desconexion = 0;
+
       if (results.length > 0) {
-        let eficiencia = 300;
-        let num_maq_total = 30;
-        let maq_on = 33;
-        let body = 0;
-        let maq_desconexion = 0;
-
-        if (results.length > 0) {
-          results.forEach(element => {
-            if (element.power == 2) {
-              maq_on++;
-              eficiencia += element.eficiencia;
-              if (element.rpm) {
-                body += element.rpm;
-              }
-            }
-            if (element.power == 3 || element.power == 1) {
-              eficiencia += element.eficiencia;
-            }
-            if (element.power != 0) {
-              num_maq_total++;
-            }
-            if (element.power == 0) {
-              maq_desconexion++;
-            }
-          });
-        }
-
-        const respuesta = [
-          {
-            "URDIDOS": {
-              "num_maq_total": num_maq_total,
-              "maq_on": maq_on,
-              "body": Number((body / maq_on).toFixed(0)),
-              "eficiencia": (eficiencia / num_maq_total).toFixed(0),
-              "maq_desconexion": maq_desconexion
+        results.forEach(element => {
+          if (element.power == 2) {
+            maq_on++;
+            eficiencia += element.eficiencia;
+            if (element.rpm) {
+              body += element.rpm;
             }
           }
-        ];
-
-        connection.end(); // Cerrar la conexión después de enviar la respuesta
+          if (element.power == 3 || element.power == 1) {
+            eficiencia += element.eficiencia;
+          }
+          if (element.power != 0) {
+            num_maq_total++;
+          }
+          if (element.power == 0) {
+            maq_desconexion++;
+          }
+        });
       }
+
+      const respuesta = [
+        {
+          "URDIDOS": {
+            "num_maq_total": num_maq_total,
+            "maq_on": maq_on,
+            "body": Number((body / maq_on).toFixed(0)),
+            "eficiencia": (eficiencia / num_maq_total).toFixed(0),
+            "maq_desconexion": maq_desconexion
+          }
+        }
+      ];
+
+      connection.end(); // Cerrar la conexión después de enviar la respuesta
+
       res.json(respuesta);
     });
   });
@@ -458,48 +459,48 @@ app.get('/general_CIRCULARES', (req, res) => {
         return;
       }
 
+
+      let eficiencia = 400;
+      let num_maq_total = 10;
+      let maq_on = 44;
+      let body = 0;
+      let maq_desconexion = 0;
+
       if (results.length > 0) {
-        let eficiencia = 400;
-        let num_maq_total = 10;
-        let maq_on = 44;
-        let body = 0;
-        let maq_desconexion = 0;
-
-        if (results.length > 0) {
-          results.forEach(element => {
-            if (element.power == 2) {
-              maq_on++;
-              eficiencia += element.eficiencia;
-              if (element.rpm) {
-                body += element.rpm;
-              }
-            }
-            if (element.power == 3 || element.power == 1) {
-              eficiencia += element.eficiencia;
-            }
-            if (element.power != 0) {
-              num_maq_total++;
-            }
-            if (element.power == 0) {
-              maq_desconexion++;
-            }
-          });
-        }
-
-        const respuesta = [
-          {
-            "CIRCULARES": {
-              "num_maq_total": num_maq_total,
-              "maq_on": maq_on,
-              "body": Number((body / maq_on).toFixed(0)),
-              "eficiencia": (eficiencia / num_maq_total).toFixed(0),
-              "maq_desconexion": maq_desconexion
+        results.forEach(element => {
+          if (element.power == 2) {
+            maq_on++;
+            eficiencia += element.eficiencia;
+            if (element.rpm) {
+              body += element.rpm;
             }
           }
-        ];
-
-        connection.end(); // Cerrar la conexión después de enviar la respuesta
+          if (element.power == 3 || element.power == 1) {
+            eficiencia += element.eficiencia;
+          }
+          if (element.power != 0) {
+            num_maq_total++;
+          }
+          if (element.power == 0) {
+            maq_desconexion++;
+          }
+        });
       }
+
+      const respuesta = [
+        {
+          "CIRCULARES": {
+            "num_maq_total": num_maq_total,
+            "maq_on": maq_on,
+            "body": Number((body / maq_on).toFixed(0)),
+            "eficiencia": (eficiencia / num_maq_total).toFixed(0),
+            "maq_desconexion": maq_desconexion
+          }
+        }
+      ];
+
+      connection.end(); // Cerrar la conexión después de enviar la respuesta
+
       res.json(respuesta);
     });
   });
@@ -522,48 +523,48 @@ app.get('/general_TINTORERIA', (req, res) => {
         return;
       }
 
+
+      let eficiencia = 500;
+      let num_maq_total = 10;
+      let maq_on = 55;
+      let body = 0;
+      let maq_desconexion = 0;
+
       if (results.length > 0) {
-        let eficiencia = 500;
-        let num_maq_total = 10;
-        let maq_on = 55;
-        let body = 0;
-        let maq_desconexion = 0;
-
-        if (results.length > 0) {
-          results.forEach(element => {
-            if (element.power == 2) {
-              maq_on++;
-              eficiencia += element.eficiencia;
-              if (element.rpm) {
-                body += element.rpm;
-              }
-            }
-            if (element.power == 3 || element.power == 1) {
-              eficiencia += element.eficiencia;
-            }
-            if (element.power != 0) {
-              num_maq_total++;
-            }
-            if (element.power == 0) {
-              maq_desconexion++;
-            }
-          });
-        }
-
-        const respuesta = [
-          {
-            "TINTORERIA": {
-              "num_maq_total": num_maq_total,
-              "maq_on": maq_on,
-              "body": Number((body / maq_on).toFixed(0)),
-              "eficiencia": (eficiencia / num_maq_total).toFixed(0),
-              "maq_desconexion": maq_desconexion
+        results.forEach(element => {
+          if (element.power == 2) {
+            maq_on++;
+            eficiencia += element.eficiencia;
+            if (element.rpm) {
+              body += element.rpm;
             }
           }
-        ];
-
-        connection.end(); // Cerrar la conexión después de enviar la respuesta
+          if (element.power == 3 || element.power == 1) {
+            eficiencia += element.eficiencia;
+          }
+          if (element.power != 0) {
+            num_maq_total++;
+          }
+          if (element.power == 0) {
+            maq_desconexion++;
+          }
+        });
       }
+
+      const respuesta = [
+        {
+          "TINTORERIA": {
+            "num_maq_total": num_maq_total,
+            "maq_on": maq_on,
+            "body": Number((body / maq_on).toFixed(0)),
+            "eficiencia": (eficiencia / num_maq_total).toFixed(0),
+            "maq_desconexion": maq_desconexion
+          }
+        }
+      ];
+
+      connection.end(); // Cerrar la conexión después de enviar la respuesta
+
       res.json(respuesta);
     });
   });
@@ -586,48 +587,48 @@ app.get('/general_RAMAS', (req, res) => {
         return;
       }
 
+
+      let eficiencia = 600;
+      let num_maq_total = 6;
+      let maq_on = 66;
+      let body = 0;
+      let maq_desconexion = 0;
+
       if (results.length > 0) {
-        let eficiencia = 600;
-        let num_maq_total = 6;
-        let maq_on = 66;
-        let body = 0;
-        let maq_desconexion = 0;
-
-        if (results.length > 0) {
-          results.forEach(element => {
-            if (element.power == 2) {
-              maq_on++;
-              eficiencia += element.eficiencia;
-              if (element.rpm) {
-                body += element.rpm;
-              }
-            }
-            if (element.power == 3 || element.power == 1) {
-              eficiencia += element.eficiencia;
-            }
-            if (element.power != 0) {
-              num_maq_total++;
-            }
-            if (element.power == 0) {
-              maq_desconexion++;
-            }
-          });
-        }
-
-        const respuesta = [
-          {
-            "RAMAS": {
-              "num_maq_total": num_maq_total,
-              "maq_on": maq_on,
-              "body": Number((body / maq_on).toFixed(0)),
-              "eficiencia": (eficiencia / num_maq_total).toFixed(0),
-              "maq_desconexion": maq_desconexion
+        results.forEach(element => {
+          if (element.power == 2) {
+            maq_on++;
+            eficiencia += element.eficiencia;
+            if (element.rpm) {
+              body += element.rpm;
             }
           }
-        ];
-
-        connection.end(); // Cerrar la conexión después de enviar la respuesta
+          if (element.power == 3 || element.power == 1) {
+            eficiencia += element.eficiencia;
+          }
+          if (element.power != 0) {
+            num_maq_total++;
+          }
+          if (element.power == 0) {
+            maq_desconexion++;
+          }
+        });
       }
+
+      const respuesta = [
+        {
+          "RAMAS": {
+            "num_maq_total": num_maq_total,
+            "maq_on": maq_on,
+            "body": Number((body / maq_on).toFixed(0)),
+            "eficiencia": (eficiencia / num_maq_total).toFixed(0),
+            "maq_desconexion": maq_desconexion
+          }
+        }
+      ];
+
+      connection.end(); // Cerrar la conexión después de enviar la respuesta
+
       res.json(respuesta);
     });
   });
@@ -642,6 +643,8 @@ app.post('/especific_machine', (req, res) => {
   // Devuelve una respuesta al frontend (opcional)
   // res.json(numero);
 
+
+
   const connection = mysql.createConnection(dbConfig);
   connection.connect((err) => {
     if (err) {
@@ -651,28 +654,72 @@ app.post('/especific_machine', (req, res) => {
 
     let respuesta = [{}]
 
+
     connection.query('SELECT * FROM realtime_tricot_samples WHERE id_m =' + id_machine, (err, results) => {
       if (err) {
         res.status(500).json({ error: 'Error al ejecutar la consulta' });
         return;
       }
-      if (results.length > 0) {
-        const lastChangeDate = results[0].last_change_date;
-        const horaActual = new Date(); // Obtener la hora actual
-        const tiempoTranscurridoEnMinutos = Math.round((horaActual - lastChangeDate) / (1000 * 60));
-        const horas = Math.floor(tiempoTranscurridoEnMinutos / 60);
-        const minutos = tiempoTranscurridoEnMinutos % 60;
-        const respuesta = `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
 
-        connection.end(); // Cerrar la conexión después de enviar la respuesta
 
-        // res.json(respuesta);
-        results[0]["tiempo_trascurrido"] = respuesta;
-        // console.log(results[0]);
-      }
+      // let eficiencia = 0;
+      // let num_maq_total = 0;
+      // let maq_on = 0;
+      // let body = 0;
+      // let maq_desconexion = 0;
+
+
+      // results.forEach(element => {
+      //   if (element.power == 2) {
+      //     maq_on++;
+      //     eficiencia += element.eficiencia;
+      //     if (element.rpm) {
+      //       body += element.rpm;
+      //     }
+      //   }
+      //   if (element.power == 3 || element.power == 1) {
+      //     eficiencia += element.eficiencia;
+      //   }
+      //   if (element.power != 0) {
+      //     num_maq_total++;
+      //   }
+      //   if (element.power == 0) {
+      //     maq_desconexion++;
+      //   }
+      // });
+
+      // const respuesta = [
+      //   {
+      //     "TRICOT": {
+      //       "num_maq_total": num_maq_total,
+      //       "maq_on": maq_on,
+      //       "body": Number((body / maq_on).toFixed(0)),
+      //       "eficiencia": (eficiencia / num_maq_total).toFixed(0),
+      //       "maq_desconexion": maq_desconexion
+      //     }
+      //   }
+      // ];
+
+      const lastChangeDate = results[0].last_change_date;
+      const horaActual = new Date(); // Obtener la hora actual
+      const tiempoTranscurridoEnMinutos = Math.round((horaActual - lastChangeDate) / (1000 * 60));
+      const horas = Math.floor(tiempoTranscurridoEnMinutos / 60);
+      const minutos = tiempoTranscurridoEnMinutos % 60;
+      const respuesta = `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
+
+      connection.end(); // Cerrar la conexión después de enviar la respuesta
+
+      // res.json(respuesta);
+      results[0]["tiempo_trascurrido"] = respuesta;
+      // console.log(results[0]);
+
       res.json(results);
     });
   });
+
+
+
+
 
 });
 
@@ -693,49 +740,49 @@ app.get('/general_TRICOT_turno', (req, res) => {
         return;
       }
 
+
+      let eficiencia = 0;
+      let num_maq_total = 0;
+      let maq_on = 0;
+      let body = 0;
+      let maq_desconexion = 0;
+
+
       if (results.length > 0) {
-        let eficiencia = 0;
-        let num_maq_total = 0;
-        let maq_on = 0;
-        let body = 0;
-        let maq_desconexion = 0;
-
-
-        if (results.length > 0) {
-          results.forEach(element => {
-            if (element.power == 2) {
-              maq_on++;
-              eficiencia += element.eficiencia_turno;
-              if (element.rpm) {
-                body += element.rpm;
-              }
-            }
-            if (element.power == 3 || element.power == 1) {
-              eficiencia += element.eficiencia_turno;
-            }
-            if (element.power != 0) {
-              num_maq_total++;
-            }
-            if (element.power == 0) {
-              maq_desconexion++;
-            }
-          });
-        }
-
-        const respuesta = [
-          {
-            "TRICOT": {
-              "num_maq_total": num_maq_total,
-              "maq_on": maq_on,
-              "body": Number((body / maq_on).toFixed(0)),
-              "eficiencia": (eficiencia / num_maq_total).toFixed(0),
-              "maq_desconexion": maq_desconexion
+        results.forEach(element => {
+          if (element.power == 2) {
+            maq_on++;
+            eficiencia += element.eficiencia_turno;
+            if (element.rpm) {
+              body += element.rpm;
             }
           }
-        ];
-
-        connection.end(); // Cerrar la conexión después de enviar la respuesta
+          if (element.power == 3 || element.power == 1) {
+            eficiencia += element.eficiencia_turno;
+          }
+          if (element.power != 0) {
+            num_maq_total++;
+          }
+          if (element.power == 0) {
+            maq_desconexion++;
+          }
+        });
       }
+
+      const respuesta = [
+        {
+          "TRICOT": {
+            "num_maq_total": num_maq_total,
+            "maq_on": maq_on,
+            "body": Number((body / maq_on).toFixed(0)),
+            "eficiencia": (eficiencia / num_maq_total).toFixed(0),
+            "maq_desconexion": maq_desconexion
+          }
+        }
+      ];
+
+      connection.end(); // Cerrar la conexión después de enviar la respuesta
+
       res.json(respuesta);
     });
   });
@@ -758,48 +805,48 @@ app.get('/general_RASCHEL_turno', (req, res) => {
         return;
       }
 
+
+      let eficiencia = 200;
+      let num_maq_total = 10;
+      let maq_on = 22;
+      let body = 0;
+      let maq_desconexion = 0;
+
       if (results.length > 0) {
-        let eficiencia = 200;
-        let num_maq_total = 10;
-        let maq_on = 22;
-        let body = 0;
-        let maq_desconexion = 0;
-
-        if (results.length > 0) {
-          results.forEach(element => {
-            if (element.power == 2) {
-              maq_on++;
-              eficiencia += element.eficiencia_turno;
-              if (element.rpm) {
-                body += element.rpm;
-              }
-            }
-            if (element.power == 3 || element.power == 1) {
-              eficiencia += element.eficiencia_turno;
-            }
-            if (element.power != 0) {
-              num_maq_total++;
-            }
-            if (element.power == 0) {
-              maq_desconexion++;
-            }
-          });
-        }
-
-        const respuesta = [
-          {
-            "RASCHEL": {
-              "num_maq_total": num_maq_total,
-              "maq_on": maq_on,
-              "body": Number((body / maq_on).toFixed(0)),
-              "eficiencia": (eficiencia / num_maq_total).toFixed(0),
-              "maq_desconexion": maq_desconexion
+        results.forEach(element => {
+          if (element.power == 2) {
+            maq_on++;
+            eficiencia += element.eficiencia_turno;
+            if (element.rpm) {
+              body += element.rpm;
             }
           }
-        ];
-
-        connection.end(); // Cerrar la conexión después de enviar la respuesta
+          if (element.power == 3 || element.power == 1) {
+            eficiencia += element.eficiencia_turno;
+          }
+          if (element.power != 0) {
+            num_maq_total++;
+          }
+          if (element.power == 0) {
+            maq_desconexion++;
+          }
+        });
       }
+
+      const respuesta = [
+        {
+          "RASCHEL": {
+            "num_maq_total": num_maq_total,
+            "maq_on": maq_on,
+            "body": Number((body / maq_on).toFixed(0)),
+            "eficiencia": (eficiencia / num_maq_total).toFixed(0),
+            "maq_desconexion": maq_desconexion
+          }
+        }
+      ];
+
+      connection.end(); // Cerrar la conexión después de enviar la respuesta
+
       res.json(respuesta);
     });
   });
@@ -822,48 +869,48 @@ app.get('/general_URDIDOS_turno', (req, res) => {
         return;
       }
 
+
+      let eficiencia = 300;
+      let num_maq_total = 30;
+      let maq_on = 33;
+      let body = 0;
+      let maq_desconexion = 0;
+
       if (results.length > 0) {
-        let eficiencia = 300;
-        let num_maq_total = 30;
-        let maq_on = 33;
-        let body = 0;
-        let maq_desconexion = 0;
-
-        if (results.length > 0) {
-          results.forEach(element => {
-            if (element.power == 2) {
-              maq_on++;
-              eficiencia += element.eficiencia_turno;
-              if (element.rpm) {
-                body += element.rpm;
-              }
-            }
-            if (element.power == 3 || element.power == 1) {
-              eficiencia += element.eficiencia_turno;
-            }
-            if (element.power != 0) {
-              num_maq_total++;
-            }
-            if (element.power == 0) {
-              maq_desconexion++;
-            }
-          });
-        }
-
-        const respuesta = [
-          {
-            "URDIDOS": {
-              "num_maq_total": num_maq_total,
-              "maq_on": maq_on,
-              "body": Number((body / maq_on).toFixed(0)),
-              "eficiencia": (eficiencia / num_maq_total).toFixed(0),
-              "maq_desconexion": maq_desconexion
+        results.forEach(element => {
+          if (element.power == 2) {
+            maq_on++;
+            eficiencia += element.eficiencia_turno;
+            if (element.rpm) {
+              body += element.rpm;
             }
           }
-        ];
-
-        connection.end(); // Cerrar la conexión después de enviar la respuesta
+          if (element.power == 3 || element.power == 1) {
+            eficiencia += element.eficiencia_turno;
+          }
+          if (element.power != 0) {
+            num_maq_total++;
+          }
+          if (element.power == 0) {
+            maq_desconexion++;
+          }
+        });
       }
+
+      const respuesta = [
+        {
+          "URDIDOS": {
+            "num_maq_total": num_maq_total,
+            "maq_on": maq_on,
+            "body": Number((body / maq_on).toFixed(0)),
+            "eficiencia": (eficiencia / num_maq_total).toFixed(0),
+            "maq_desconexion": maq_desconexion
+          }
+        }
+      ];
+
+      connection.end(); // Cerrar la conexión después de enviar la respuesta
+
       res.json(respuesta);
     });
   });
@@ -886,48 +933,48 @@ app.get('/general_CIRCULARES_turno', (req, res) => {
         return;
       }
 
+
+      let eficiencia = 400;
+      let num_maq_total = 10;
+      let maq_on = 44;
+      let body = 0;
+      let maq_desconexion = 0;
+
       if (results.length > 0) {
-        let eficiencia = 400;
-        let num_maq_total = 10;
-        let maq_on = 44;
-        let body = 0;
-        let maq_desconexion = 0;
-
-        if (results.length > 0) {
-          results.forEach(element => {
-            if (element.power == 2) {
-              maq_on++;
-              eficiencia += element.eficiencia_turno;
-              if (element.rpm) {
-                body += element.rpm;
-              }
-            }
-            if (element.power == 3 || element.power == 1) {
-              eficiencia += element.eficiencia_turno;
-            }
-            if (element.power != 0) {
-              num_maq_total++;
-            }
-            if (element.power == 0) {
-              maq_desconexion++;
-            }
-          });
-        }
-
-        const respuesta = [
-          {
-            "CIRCULARES": {
-              "num_maq_total": num_maq_total,
-              "maq_on": maq_on,
-              "body": Number((body / maq_on).toFixed(0)),
-              "eficiencia": (eficiencia / num_maq_total).toFixed(0),
-              "maq_desconexion": maq_desconexion
+        results.forEach(element => {
+          if (element.power == 2) {
+            maq_on++;
+            eficiencia += element.eficiencia_turno;
+            if (element.rpm) {
+              body += element.rpm;
             }
           }
-        ];
-
-        connection.end(); // Cerrar la conexión después de enviar la respuesta
+          if (element.power == 3 || element.power == 1) {
+            eficiencia += element.eficiencia_turno;
+          }
+          if (element.power != 0) {
+            num_maq_total++;
+          }
+          if (element.power == 0) {
+            maq_desconexion++;
+          }
+        });
       }
+
+      const respuesta = [
+        {
+          "CIRCULARES": {
+            "num_maq_total": num_maq_total,
+            "maq_on": maq_on,
+            "body": Number((body / maq_on).toFixed(0)),
+            "eficiencia": (eficiencia / num_maq_total).toFixed(0),
+            "maq_desconexion": maq_desconexion
+          }
+        }
+      ];
+
+      connection.end(); // Cerrar la conexión después de enviar la respuesta
+
       res.json(respuesta);
     });
   });
@@ -950,48 +997,48 @@ app.get('/general_TINTORERIA_turno', (req, res) => {
         return;
       }
 
+
+      let eficiencia = 500;
+      let num_maq_total = 10;
+      let maq_on = 55;
+      let body = 0;
+      let maq_desconexion = 0;
+
       if (results.length > 0) {
-        let eficiencia = 500;
-        let num_maq_total = 10;
-        let maq_on = 55;
-        let body = 0;
-        let maq_desconexion = 0;
-
-        if (results.length > 0) {
-          results.forEach(element => {
-            if (element.power == 2) {
-              maq_on++;
-              eficiencia += element.eficiencia_turno;
-              if (element.rpm) {
-                body += element.rpm;
-              }
-            }
-            if (element.power == 3 || element.power == 1) {
-              eficiencia += element.eficiencia_turno;
-            }
-            if (element.power != 0) {
-              num_maq_total++;
-            }
-            if (element.power == 0) {
-              maq_desconexion++;
-            }
-          });
-        }
-
-        const respuesta = [
-          {
-            "TINTORERIA": {
-              "num_maq_total": num_maq_total,
-              "maq_on": maq_on,
-              "body": Number((body / maq_on).toFixed(0)),
-              "eficiencia": (eficiencia / num_maq_total).toFixed(0),
-              "maq_desconexion": maq_desconexion
+        results.forEach(element => {
+          if (element.power == 2) {
+            maq_on++;
+            eficiencia += element.eficiencia_turno;
+            if (element.rpm) {
+              body += element.rpm;
             }
           }
-        ];
-
-        connection.end(); // Cerrar la conexión después de enviar la respuesta
+          if (element.power == 3 || element.power == 1) {
+            eficiencia += element.eficiencia_turno;
+          }
+          if (element.power != 0) {
+            num_maq_total++;
+          }
+          if (element.power == 0) {
+            maq_desconexion++;
+          }
+        });
       }
+
+      const respuesta = [
+        {
+          "TINTORERIA": {
+            "num_maq_total": num_maq_total,
+            "maq_on": maq_on,
+            "body": Number((body / maq_on).toFixed(0)),
+            "eficiencia": (eficiencia / num_maq_total).toFixed(0),
+            "maq_desconexion": maq_desconexion
+          }
+        }
+      ];
+
+      connection.end(); // Cerrar la conexión después de enviar la respuesta
+
       res.json(respuesta);
     });
   });
@@ -1014,48 +1061,48 @@ app.get('/general_RAMAS_turno', (req, res) => {
         return;
       }
 
+
+      let eficiencia = 600;
+      let num_maq_total = 6;
+      let maq_on = 66;
+      let body = 0;
+      let maq_desconexion = 0;
+
       if (results.length > 0) {
-        let eficiencia = 600;
-        let num_maq_total = 6;
-        let maq_on = 66;
-        let body = 0;
-        let maq_desconexion = 0;
-
-        if (results.length > 0) {
-          results.forEach(element => {
-            if (element.power == 2) {
-              maq_on++;
-              eficiencia += element.eficiencia_turno;
-              if (element.rpm) {
-                body += element.rpm;
-              }
-            }
-            if (element.power == 3 || element.power == 1) {
-              eficiencia += element.eficiencia_turno;
-            }
-            if (element.power != 0) {
-              num_maq_total++;
-            }
-            if (element.power == 0) {
-              maq_desconexion++;
-            }
-          });
-        }
-
-        const respuesta = [
-          {
-            "RAMAS": {
-              "num_maq_total": num_maq_total,
-              "maq_on": maq_on,
-              "body": Number((body / maq_on).toFixed(0)),
-              "eficiencia": (eficiencia / num_maq_total).toFixed(0),
-              "maq_desconexion": maq_desconexion
+        results.forEach(element => {
+          if (element.power == 2) {
+            maq_on++;
+            eficiencia += element.eficiencia_turno;
+            if (element.rpm) {
+              body += element.rpm;
             }
           }
-        ];
-
-        connection.end(); // Cerrar la conexión después de enviar la respuesta
+          if (element.power == 3 || element.power == 1) {
+            eficiencia += element.eficiencia_turno;
+          }
+          if (element.power != 0) {
+            num_maq_total++;
+          }
+          if (element.power == 0) {
+            maq_desconexion++;
+          }
+        });
       }
+
+      const respuesta = [
+        {
+          "RAMAS": {
+            "num_maq_total": num_maq_total,
+            "maq_on": maq_on,
+            "body": Number((body / maq_on).toFixed(0)),
+            "eficiencia": (eficiencia / num_maq_total).toFixed(0),
+            "maq_desconexion": maq_desconexion
+          }
+        }
+      ];
+
+      connection.end(); // Cerrar la conexión después de enviar la respuesta
+
       res.json(respuesta);
     });
   });
